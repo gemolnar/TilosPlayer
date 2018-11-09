@@ -54,18 +54,16 @@
 
             <div class="hidden-xs col-md-1">@* filler *@</div>
             <div class="col-xs-5 col-md-4 text-right">
-                <h1>@episode.RealFrom.ToString("HH:mm")</h1>
-                <h5>@episode.RealTo.Subtract(episode.RealFrom).ToString(@"hh\ó\ mm\p")</h5>
+				<h3>@episode.RealFrom.ToString("HH:mm")</h3>
                 <h6>@episode.RealFrom.ToString("yyyy MMMM dd.", huCulture)</h6>
-
             </div>
             <div class="col-xs-7 col-md-6">
 
 
                 <div class="card bg-light shadow mb-5 rounded" style="margin-bottom:30px">
-                    <h3 class="card-header" onclick="onShowClicked('@episode.Id')" style="cursor: pointer">
-                        <i class="fas fa-play-circle"></i> @episode.Show.Name
-                    </h3>
+					<h3 class="card-header" onclick="onShowClicked('@episode.Id')" style="cursor: pointer">
+						<i class="fas fa-play-circle"></i> @episode.Show.Name <span class="text-muted">[@episode.RealTo.Subtract(episode.RealFrom).ToString(@"hh\:mm")]</span>
+					</h3>
                     <div class="card-body">
                         <h6 class="card-title">
                             @episode.Text?.Title
