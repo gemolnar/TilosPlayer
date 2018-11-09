@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tilos CAF receiver app. Not to be used in browsers but by [Google/Chrome]Cast devices.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+
+    @*<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />*@
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    @*<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/js/tilos-player-state.js"></script>
+
+
+</head>
+<body>
+    <audio id="htmlAudioPlayer"></audio>
+
+    <div class="container" style="background-color:gainsboro">
+
+        <div class="row">
+            <div class="col-sm">
+                One of three columns
+            </div>
+            <div class="col-sm">
+                One of three columns
+            </div>
+            <div class="col-sm">
+                One of three columns
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2" style="background-color:aqua">Col1.</div>
+            <div class="col-8">
+                <span id="logger">this is a sample content</span>
+            </div>
+            <div class="col-2" style="background-color:aquamarine">Col3</div>
+        </div>
+    </div>
+    <!--<cast-media-player id="player"></cast-media-player>-->
+    @*<style>
+            #player {
+                --theme-hue: 42;
+                --splash-image: url("/caf/tilos-splash-image.jpg");
+            }
+        </style>*@
+
+    <script type="text/javascript" src="/js/tilos-receiver-app.js"></script>
+
+</body>
+</html>

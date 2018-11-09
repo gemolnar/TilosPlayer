@@ -1,0 +1,189 @@
+﻿@*@model tilos.Controllers.TilosPodcastModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@{
+    string controlsIfInQueryString = Context.Request.Query["controls"].Any() ? "controls" : string.Empty;
+}
+
+<div class="row">
+    <div class="col-12">
+        <h2>Műsorok:</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Summary)
+                    </th>
+                    <th>
+                        asd
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr style="height:@(item.LengthSeconds / 20)px">
+                        <td>
+                            <a href="@item.Id">@item.Id.Substring("https://tilos.hu/episode".Length)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            <button data-media-url="@item.MediaUrl"
+                                    data-item-id="@item.Id"
+                                    data-show-length="@item.LengthSeconds">
+                                ▶ play
+                            </button>
+                        </td>
+                        <td>
+                            <a href="@item.MediaUrl">link .mp3</a>
+                        </td>
+                        <td>
+                            <div style="width:100px">
+                                @Html.Raw(item.LengthSeconds)
+
+                                @*@Html.Raw((DateTime.Now.Subtract(tilos.Controllers.TilosPodcastModel.EPOCH)).Subtract(item.StartDateTime.Subtract(tilos.Controllers.TilosPodcastModel.EPOCH)).TotalHours * 100)*@
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Footer {
+    <audio id="h5ae" @Html.Raw(controlsIfInQueryString)></audio>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-8">
+            <h1 id="footer-title">footer-title</h1>
+        </div>
+        <div class="col-1" id="cast-button-container">
+            <div style="width:50px;height:50px">
+                <google-cast-launcher></google-cast-launcher>
+            </div>
+        </div>
+        <div class="col-1" id="play-button-container">
+            <button style="width:50px;height:50px">▶</button>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-8">
+            <span id="footer-time">footer-time</span>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row">
+        <div id="footer-progress-bar" style="width:0%;height:50px;background-color:palevioletred"></div>
+    </div>
+}
+
+@section Scripts
+    {
+    <script>
+        initializeCastApi = function () {
+            cast.framework.CastContext.getInstance().setOptions({
+                receiverApplicationId: "46E57F3C",
+                autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+            });
+        };
+
+        $(document).ready(function () {
+            $("button[data-media-url]").on("click", onMediaUrlProviderClicked);
+            playing = {};
+            var html5Audio = $("#h5ae");
+            html5Audio.on("play", onHtml5AudioEvent);
+            html5Audio.on("progress", onHtml5AudioEvent);
+            html5Audio.on("timeupdate", onHtml5AudioEvent);
+        });
+
+        //$(window).on("load", function () {
+        //    console.log("window loaded");
+        //});
+
+        function onHtml5AudioEvent(e) {
+            switch (e.type) {
+                case "timeupdate":
+                    //console.log(e.target);
+                    //console.log(e.originalEvent);
+                    //console.log(e.target.currentTime);
+                    window.currentTime = e.target.currentTime;
+                    refreshFooter();
+                    break;
+
+                case "play":
+                    console.log(e);
+                    break;
+
+                case "progress":
+                    console.log("Progressing: " + e.timeStamp);
+                    break;
+                default:
+                    console.log(e.type + " event fired.");
+            }
+        }
+
+        function refreshFooter() {
+            $("#footer-time").text(window.currentTime);
+            $("#footer-title").text(playing.mediaUrl);
+            $("#footer-progress-bar").text(playing.showLengthSeconds);
+            var currentPercent = (window.currentTime * 100 / playing.showLengthSeconds);
+
+            $("#footer-progress-bar").css("width", currentPercent + "%");
+        }
+
+
+        function onMediaUrlProviderClicked(e) {
+            var mediaUrl = $(e.target).data("media-url");
+            var itemId = $(e.target).data("item-id"); 
+            var showLengthSeconds = parseInt($(e.target).data("show-length"));
+
+
+            playing = {
+                itemId: itemId,
+                mediaUrl: mediaUrl,
+                showLengthSeconds: showLengthSeconds
+            };
+            refreshFooter();
+            console.log("MediaUrlProviderClicked: " + mediaUrl + " (" + itemId + ").");
+            console.log(playing);
+            // LOCAL
+            //var html5Audio = $("#h5ae");
+            //html5Audio.attr("src", mediaUrl);
+            //html5Audio.trigger("play");
+
+            //CAST
+            var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+            var mediaInfo = new chrome.cast.media.MediaInfo(mediaUrl, "audio/mpeg");
+            var audioMetadata = new chrome.cast.media.MusicTrackMediaMetadata();
+            audioMetadata.title = "This is title";
+            audioMetadata.artist = "This is artist";
+            audioMetadata.albumName = "This is albumName";
+            audioMetadata.releaseDate = "2018-02-01";
+            mediaInfo.metadata = audioMetadata;
+            var request = new chrome.cast.media.LoadRequest(mediaInfo);
+            castSession.loadMedia(request).then(
+                function () { console.log('Load succeed'); },
+                function (errorCode) { console.log('Error code: ' + errorCode); });
+            
+        }
+    </script>
+
+}*@

@@ -1,0 +1,179 @@
+﻿@using TilosPlayer.Library.Domain
+@model IEnumerable<Episode>
+
+@{
+    ViewData["Title"] = "Home Page";
+    string controlsIfInQueryString = Context.Request.Query["controls"].Any() ? "controls" : string.Empty;
+    var huCulture = new System.Globalization.CultureInfo("hu-HU");
+    var controlIds = new
+    {
+        ProgressBar = "progressbar"
+    };
+    
+}
+
+<div class="container">
+    <style>
+        .card img
+        {
+            width:100%;
+        }
+
+        .card-header:hover i
+        {
+            color: green;
+        }
+    </style>
+
+    @{
+        Episode previousEpisode = null;
+    }
+    @foreach (var episode in Model)
+    {
+        if (previousEpisode == null || episode.RealFrom.Date != previousEpisode.RealFrom.Date)
+        {
+            <div class="row alert-info shadow mb-5 bg-info rounded" style="padding-top:30px; margin-bottom:15px" >
+                <div class="hidden-xs col-md-2">@* filler *@</div>
+                <div class="col-xs-5 col-md-3">
+                    <div >
+                        <h4>@episode.RealFrom.ToString("yyyy-MM-dd")</h4>
+                        <h4>@episode.RealFrom.ToString("MMMM-dd", huCulture)</h4>
+
+                    </div>
+                </div>
+                <div class="col-xs-7 col-md-5">
+                    <h5 class="display-4">@episode.RealFrom.ToString("dddd", huCulture)</h5>
+                </div>
+                <div class="hidden-xs col-md-2">@* filler *@</div>
+            </div>
+        }
+        previousEpisode = episode;
+
+
+        <div class="row" style="overflow:hidden" id="episode-@episode.Id">
+
+            <div class="hidden-xs col-md-1">@* filler *@</div>
+            <div class="col-xs-5 col-md-4 text-right">
+                <h1>@episode.RealFrom.ToString("HH:mm")</h1>
+                <h5>@episode.RealTo.Subtract(episode.RealFrom).ToString(@"hh\ó\ mm\p")</h5>
+                <h6>@episode.RealFrom.ToString("yyyy MMMM dd.", huCulture)</h6>
+
+            </div>
+            <div class="col-xs-7 col-md-6">
+
+
+                <div class="card bg-light shadow mb-5 rounded" style="margin-bottom:30px">
+                    <h3 class="card-header" onclick="onShowClicked('@episode.Id')" style="cursor: pointer">
+                        <i class="fas fa-play-circle"></i> @episode.Show.Name
+                    </h3>
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            @episode.Text?.Title
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted">
+ 
+                                @Html.Raw(episode.Show.Definition)
+
+
+                        </h6>
+
+                        <div class="card-text " style="margin-top:20px;overflow:hidden">
+                                @Html.Raw(episode.Text?.Formatted)
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <span class="">
+                            @if (episode.Show.Type == "MUSIC")
+                            {
+                                <i class="fas fa-music"></i>
+                            }
+                            else if (episode.Show.Type == "SPEECH")
+                            {
+                                <i class="far fa-comments"></i>
+                            }
+                        </span>
+                        @episode.FormattedAgo
+                        @*<i class="fas fa-circle" style="font-size:6px;padding-left:4px;padding-right:4px"></i>*@
+                        <a href="@episode.MediaUrl" class="badge badge-light"><i class="fas fa-link"></i> mp3</a>
+                        @*<i class="fas fa-circle" style="font-size:6px;padding-left:4px;padding-right:4px"></i>*@
+                        <a href="@episode.MediaUrl" class="badge badge-light"><i class="fas fa-link"></i> tilos.hu</a>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="hidden-xs col-md-1">@* filler *@</div>
+        </div>
+    }
+</div>
+
+@section Footer {
+<h1>
+    <i class="fas fa-play-circle" onclick="onPlayClicked()"></i>
+    <i class="fas fa-pause-circle" onclick="onPauseClicked()"></i>
+    <i class="fas fa-forward"></i>
+    <i class="fas fa-backward"></i>
+    <div style="display:inline-block;width:42px;cursor:pointer">
+        <google-cast-launcher style="--disconnected-color: white;vertical-align:middle">
+        </google-cast-launcher>
+    </div>
+    <div id="currentShowName"></div>
+</h1>
+    @*<div id="statusMessage">.....</div>*@
+    <div id="progressContainer" class="progress" style="height:5px;cursor:pointer">
+        <div id="@controlIds.ProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:0"></div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+
+        
+        function onProgressBarClicked(e) {
+            console.log("-------");
+            var container = document.getElementById("progressContainer");
+            var l = container.getBoundingClientRect().left;
+            var r = container.getBoundingClientRect().right;
+            var w = r - l;
+            console.log(e);
+            console.log(l);
+            var pos = e.clientX - l;
+            console.log(pos);
+            var p = (pos / w) * 100;
+            tilosPlayer.seekToPercent(p);
+            console.log(p);
+        }
+
+        function onShowClicked(episodeId) {
+            var episode = episodes.filter(e => e.id == episodeId)[0];
+            console.log(episode);
+            tilosPlayer.currentEpisode = episode;
+            tilosPlayer.refresh();
+        }
+
+        function onPauseClicked() {
+            tilosPlayer.pause();
+        }
+
+        function onPlayClicked() {
+            tilosPlayer.play();
+        }
+
+        var episodes = @Json.Serialize(Model);
+        var controlIds = @Json.Serialize(controlIds);
+
+        tilosPlayer = new TilosPlayer();
+
+        $("#progressContainer").on("click", tilosPlayer.onProgBar);
+        //$("#progressContainer").on("click", onProgressBarClicked);
+
+
+        window['__onGCastApiAvailable'] = tilosPlayer.initializeCastApi;
+
+    </script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+
+
+}
