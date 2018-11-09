@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace tilos
+namespace TilosPlayer.Website
 {
-    public class WebRootPathProvider
+	public class WebRootPathProvider
     {
         public string ContentRootPath { get; internal set; }
     }
@@ -53,6 +48,7 @@ namespace tilos
             //    app.UseExceptionHandler("/Home/Error");
             //    app.UseHsts();
             //}
+
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
