@@ -1,9 +1,11 @@
 
-# Example API calls for Tilos Rádió API
+# Example API calls for Tilos RÃ¡diÃ³ API
 
 ### Episode APIs
 [API/episode/lastWeek](https://tilos.hu/api/v1/episode/lastWeek)
+
 [API/episode?start=1540742040000&end=1540770840000](https://tilos.hu/api/v1/episode?start=1540742040000&end=1540770840000)
+
 [API/episode/5bcd83803c8a1c045c6d017f](https://tilos.hu/api/v1/episode/5bcd83803c8a1c045c6d017f)
 
 ### Show APIs
