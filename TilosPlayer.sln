@@ -7,7 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "src\Tests\Tests.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website", "src\Website\Website.csproj", "{0817A167-6864-4963-B62B-97667DAD11F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "src\Library\Library.csproj", "{71C2EC28-E939-4AD7-9317-AD450F4D14DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "src\Library\Library.csproj", "{71C2EC28-E939-4AD7-9317-AD450F4D14DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{43445942-ABA0-4ED7-8C8F-BECF6BEBC2C8}"
+	ProjectSection(SolutionItems) = preProject
+		notes\Azure.md = notes\Azure.md
+		notes\ChromeCast.md = notes\ChromeCast.md
+		notes\TilosAPI.md = notes\TilosAPI.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
