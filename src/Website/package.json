@@ -1,0 +1,20 @@
+{
+  "name": "tilosplayer",
+  "version": "1.0.0",
+  "description": "HTML5 based player with ChromeCast support for Tilos Rádió, Hungary",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tilos"
+  ],
+  "author": "Gergo Molnar",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "@types/chrome": "0.0.75",
+    "@types/chromecast-caf-receiver": "^3.0.1",
+    "@types/chromecast-caf-sender": "^1.0.0",
+    "@types/jquery": "^3.3.22"
+  }
+}
