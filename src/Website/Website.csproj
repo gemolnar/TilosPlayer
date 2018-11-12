@@ -5,7 +5,7 @@
     <UserSecretsId>bfe39447-dd46-408b-a4aa-4accdc30bf73</UserSecretsId>
     <AssemblyName>TilosPlayer.Website</AssemblyName>
     <RootNamespace>TilosPlayer.Website</RootNamespace>
-    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,12 +30,6 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Views\Home\Index - Copy.cshtmlx">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </None>
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
@@ -44,7 +38,7 @@
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
     <TypeScriptOutFile />
-    <TypeScriptOutDir>C:\Users\geri\source\repos\TilosPlayer\src\Website\wwwroot\js</TypeScriptOutDir>
+    <TypeScriptOutDir>wwwroot\js</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>

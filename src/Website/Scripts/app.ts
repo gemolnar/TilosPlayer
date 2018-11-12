@@ -53,17 +53,32 @@ class TilosPlayer {
     }
 
     pause() {
-        this.localPlayer.pause();
+        if (this.mode == PlayerMode.Cast) {
+            console.log("RemotePlayer:Pause");
+            if (this.remotePlayer.playerState == chrome.cast.media.PlayerState.PLAYING) {
+                this.remotePlayerController.playOrPause();
+            }
+        }
+        else {
+            this.localPlayer.pause();
+        }
+        $("#pauseButton").hide();
+        $("#playButton").show();
     }
 
     play() {
         if (this.mode == PlayerMode.Cast) {
+            if (this.remotePlayer.playerState == chrome.cast.media.PlayerState.PAUSED) {
+                this.remotePlayerController.playOrPause();
+            }
             console.log("RemotePlayer:Play");
         }
         else {
             console.log("LocalPlayer:Play");
             this.localPlayer.play();
         }
+        $("#pauseButton").show();
+        $("#playButton").hide();
     }
 
     seekToPercent(p: number) {
@@ -80,6 +95,7 @@ class TilosPlayer {
 
     refresh() {
         $("#currentShowName").text(this.currentEpisode.show.name);
+
         if (this.mode == PlayerMode.Cast) {
             console.log("PlayerMode.Cast");
             var session = cast.framework.CastContext.getInstance().getCurrentSession();
@@ -105,8 +121,15 @@ class TilosPlayer {
         }
     }
 
+    public onRemotePlayerTimeUpdated(e: cast.framework.RemotePlayerChangedEvent) {
+        console.log("RemotePlayer seconds: " + e.value);
+    }
+    public onRemotePlayerVolumeLevelChanged(e: cast.framework.RemotePlayerChangedEvent) {
+        console.log("RemotePlayer volume: " + e.value * 100 + "%");
+    }
+
+    
     public onRemotePlayerConnectedChanged(e: cast.framework.RemotePlayerChangedEvent) {
-        console.log("onRemotePlayerConnectedChanged");
         if (e.field === "isConnected") {
             if (e.value === true) {
                 this.mode = PlayerMode.Cast;
@@ -115,7 +138,6 @@ class TilosPlayer {
                 this.mode = PlayerMode.Local;
             }
         }
-        console.log(this.mode);
     }
 
     onProgBar(e: JQuery.Event) {
@@ -151,10 +173,11 @@ class TilosPlayer {
 
         console.log("Listen to player properties changes.");
 
-        //this.localPlayer.ontimeupdate = (e) => this.onLocalTimeUpdate(e);
-
         this.remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, (e) => this.onRemotePlayerConnectedChanged(e));
 
+        this.remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.CURRENT_TIME_CHANGED, (e) => this.onRemotePlayerTimeUpdated(e));
+        //this.remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.DURATION_CHANGED, (e) => this.onRemotePlayerTimeUpdated(e));
+        this.remotePlayerController.addEventListener(cast.framework.RemotePlayerEventType.VOLUME_LEVEL_CHANGED, (e) => this.onRemotePlayerVolumeLevelChanged(e));
 
         //this.remotePlayerController.addEventListener(
         //    cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, function () {
@@ -185,7 +208,7 @@ class TilosPlayer {
         //playerController.addEventListener(
         //    cast.framework.RemotePlayerEventType.VOLUME_LEVEL_CHANGED, updateVolume);
 
-        //playerController.addEventListener(
+         //playerController.addEventListener(
         //    cast.framework.RemotePlayerEventType.IS_PAUSED_CHANGED, function () {
         //        $('playPauseButton').innerText = player.isPaused ? 'Play' : 'Pause';
         //    });

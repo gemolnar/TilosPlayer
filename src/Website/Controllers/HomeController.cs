@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using tilos;
@@ -22,11 +23,17 @@ namespace TilosPlayer.Website.Controllers
         }
 
 
-        public async Task<IActionResult> Index(int w)
+        public async Task<IActionResult> Index(string id) 
         {
+            DateTime requestedDate;
+            if (id == null || !DateTime.TryParseExact(id, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out requestedDate))
+            {
+                return RedirectToAction("Index", "Home", new { id = DateTime.UtcNow.ToString("yyyy-MM-dd") });
+            }
+
             var api = new Api();
             var now = DateTimeOffset.UtcNow; 
-            var episodes = await api.GetEpisodesByTimeRange(now.AddDays(-7 * (w+1)), now.AddDays(-7*w));
+            var episodes = await api.GetEpisodesByTimeRange(requestedDate.AddDays(-7), requestedDate);
             var shows = await api.GetAllShows();
             foreach (var episode in episodes)
             {
