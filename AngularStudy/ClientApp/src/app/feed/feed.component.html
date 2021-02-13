@@ -1,0 +1,58 @@
+<h1 class="display-4">Archívum</h1>
+<h1 id="tableLabel">3030. február 43.</h1>
+
+
+<div *ngIf="!episodes" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="episodes">
+
+  <div *ngFor="let episode of episodes" class="card" style="margin-bottom: 40px">
+
+    <div class="card-header">
+      <h5>{{ episode.text?.title != null ? episode.show?.name : "" }}</h5>
+      <h3 class="card-title">{{ episode.text?.title != null ? episode.text?.title : episode.show?.name }}</h3>
+      <p>
+        <small>
+          <b>
+            {{ dateFormater.fromTimestamp(episode.plannedFrom, 'D') }},
+            <span>{{ dateFormater.fromTimestamp(episode.plannedFrom, 'DOW') }}</span>
+          </b>
+          <br />
+
+          {{ dateFormater.fromTimestamp(episode.plannedFrom, 'T') }}
+          -
+          {{ dateFormater.fromTimestamp(episode.plannedTo, 'T') }}
+        </small>
+      </p>
+    </div>
+
+
+
+
+    <div class="card-body">
+      <p>
+        <button (click)="onPlayButtonClicked(episode)" type="button" class="btn btn-outline-success btn-sm" style="margin-right: 15px">
+          <i class="bi bi-play"></i> Play
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
+          <i class="bi bi-folder-symlink"></i> Adás
+        </button>
+        <button routerLink="/show/{{episode.show.alias}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 0px">
+          <i class="bi bi-folder-symlink"></i> Műsor
+        </button>
+      </p>
+      <p class="lead">{{ episode.show?.definition }}</p>
+
+      <p class="qqq" style="overflow: hidden;" innerHTML="{{ episode.text?.formatted }}"></p>
+    </div>
+
+  </div>
+
+
+
+</div>
+

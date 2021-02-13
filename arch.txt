@@ -1,0 +1,51 @@
+﻿
+GuiController
+-------------
+Drives the GUI, handles GUI events.
+ - Set CurrentlyPlaying (Title, length, realfrom, episode desc...)
+ - Set PlayStatus (Playing, Stopped)
+ - Set Current position (update progress bar, update originally aired at)
+ - Raise event on PlayControl click
+ - Raise event on progress click
+
+
+PlayerContoller
+---------------
+Handles local / remote players.
+Listens to GuiController events (play clicked, seek)
+  forwards the event to the active player
+Listents to player events (progress, started-stopped, errors)
+  forwards the event to the guicontroller
+
+
+/musorok
+  api: /show
+  breadcrumb: TilosPlayer > MUSOROK
+  Műsorlista https://tilos.hu/api/v1/show
+  "csak kedvencek"
+
+/musorok/{showalias}
+  api: /show/showalias
+  TilosPlayer > MUSOROK > Csonka
+  Egy adott show, leírással, musorkészítők https://tilos.hu/api/v1/show/kolorlokal
+  episode lista https://tilos.hu/api/v1/show/kolorlokal/episodes?start=1609455600000&end=1612393199999
+
+
+/musorok/{showalias}/{episode}
+  egy adott episode, hosszú leírással
+  api ugyanaz:  https://tilos.hu/api/v1/show/kolorlokal/episodes?start=1609455600000&end=1612393199999
+  TilosPlayer > MUSOROK > Csonka > 2020/1/3
+
+
+/
+  átirányít a /adasfolyam/minap-ra
+
+/adasfolyam/2020/2/3
+  datepicker   csak kedvencek
+  adott nappal kezdődő hét feedje
+  TilosPlayer > Feed > 2020/1/3
+
+  TP   Adásfolyam   Műsorokˇ
+                    Minden műsor
+                    Kedvenc1
+                    Kedvenc2

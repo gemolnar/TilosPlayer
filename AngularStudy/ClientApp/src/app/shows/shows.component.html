@@ -1,0 +1,24 @@
+<h1 id="tableLabel">Műsorok</h1>
+
+<p>műsorok</p>
+
+<div *ngIf="!shows" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="list-group" *ngIf="shows">
+
+  <a *ngFor="let show of shows"  routerLink="/show/{{show.alias}}" class="list-group-item list-group-item-action">
+    <!--active-->
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ show.name }}</h5>
+      <small>3 days ago</small>
+    </div>
+    <p class="mb-1">{{ show.definition }}</p>
+    <small>Donec id elit non mi porta.</small>
+  </a>
+
+</div>
+

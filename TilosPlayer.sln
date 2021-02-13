@@ -1,19 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "src\Tests\Tests.csproj", "{68F98BB6-30AC-41EE-98F5-293FD512E152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TilosPlayer.WebApplication", "AngularStudy\TilosPlayer.WebApplication.csproj", "{98D93C8C-16F5-4504-986C-FF8B686FE4E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website", "src\Website\Website.csproj", "{0817A167-6864-4963-B62B-97667DAD11F5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "src\Library\Library.csproj", "{71C2EC28-E939-4AD7-9317-AD450F4D14DA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{43445942-ABA0-4ED7-8C8F-BECF6BEBC2C8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C7D33E61-B948-4B41-B66A-87658A9186DD}"
 	ProjectSection(SolutionItems) = preProject
-		notes\Azure.md = notes\Azure.md
-		notes\ChromeCast.md = notes\ChromeCast.md
-		notes\TilosAPI.md = notes\TilosAPI.md
+		arch.txt = arch.txt
 	EndProjectSection
 EndProject
 Global
@@ -22,23 +16,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{68F98BB6-30AC-41EE-98F5-293FD512E152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68F98BB6-30AC-41EE-98F5-293FD512E152}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68F98BB6-30AC-41EE-98F5-293FD512E152}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68F98BB6-30AC-41EE-98F5-293FD512E152}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0817A167-6864-4963-B62B-97667DAD11F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0817A167-6864-4963-B62B-97667DAD11F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0817A167-6864-4963-B62B-97667DAD11F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0817A167-6864-4963-B62B-97667DAD11F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71C2EC28-E939-4AD7-9317-AD450F4D14DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71C2EC28-E939-4AD7-9317-AD450F4D14DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71C2EC28-E939-4AD7-9317-AD450F4D14DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71C2EC28-E939-4AD7-9317-AD450F4D14DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98D93C8C-16F5-4504-986C-FF8B686FE4E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D93C8C-16F5-4504-986C-FF8B686FE4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D93C8C-16F5-4504-986C-FF8B686FE4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D93C8C-16F5-4504-986C-FF8B686FE4E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ADFDACCA-B292-4FD7-8915-414AC6D29C7E}
+		SolutionGuid = {712C4EA3-9567-44B1-8E3C-499032DFB457}
 	EndGlobalSection
 EndGlobal
