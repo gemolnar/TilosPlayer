@@ -2,7 +2,7 @@
 <audio id="player"></audio>
 
 <nav class="fixed-bottom" >
-  <div class="container border border-5 rounded-top rounded-lg border-secondary" style="background-color: #F9F9F9;
+  <div class="container border border-5 rounded-top rounded-lg border-secondary" style="background-color: #898989;
     padding-top: 8px;
     padding-bottom: 3px;
     margin-bottom: 6px;
@@ -16,13 +16,16 @@
 
     <div class="row">
 
-      <div class="col" style="margin-bottom:5px;">
+      <!--
+        A PROGRESS BAR SÁVJÁBAN VAN A GOMB
+        <div class="col" style="margin-bottom:5px;">
         <div (click)="onProgressBarClicked($event)" style="background-color:lightgray">
           <button *ngIf="!isPlaying" (click)="onPlayClicked()" type="button" class="btn btn-success btn-sm" style="margin-right: 10px; width:70px;">
             <i class="bi bi-play-fill"></i>Play
           </button>
         </div>
       </div>
+        -->
 
 
       <div class="col" style="margin-bottom:5px;">
@@ -43,7 +46,10 @@
         <button *ngIf="isPlaying" (click)="onPauseClicked()" type="button" class="btn btn-secondary btn-sm" style="">
           <i class="bi bi-pause-fill"></i>Pause
         </button>
+        <div class="btn btn-sm btn-outline btn-warning" style="width: 50px; height: 30px" id="google-cast-launcher-container"></div>
       </div>
+      <!--<google-cast-launcher></google-cast-launcher>-->
+
     </div>
     
 

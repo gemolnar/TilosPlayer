@@ -8,7 +8,7 @@ export class DateFormatterService {
   constructor() { }
 
 
-  fromTimestamp(unixTimestamp: number, format: 'LOCALE' | 'ISO' | 'D' | 'T' | 'MD' | 'DOW'): string {
+  fromTimestamp(unixTimestamp: number, format: 'LOCALE' | 'ISO' | 'D' | 'T' | 'MD' | 'DOW' | 'YM' ): string {
 
     const d = new Date(unixTimestamp);
 
@@ -30,8 +30,8 @@ export class DateFormatterService {
 
     const dowIndex = d.getDay();
     const dow = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'][dowIndex];
-    const months = ['január', 'február', 'március', 'április', 'május', 'június', 'július', 'augusztus', 'szeptember', 'október', 'november', 'december',]
-    const monthsRoman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', "XII"]
+    const monthText = ['január', 'február', 'március', 'április', 'május', 'június', 'július', 'augusztus', 'szeptember', 'október', 'november', 'december',][d.getMonth()];
+    const monthRoman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', "XII"][d.getMonth()];
 
     switch (format) {
       case "LOCALE":
@@ -45,7 +45,9 @@ export class DateFormatterService {
       case "DOW":
         return `${dow}`;
       case "MD":
-        return `${month}. ${day}.`;
+        return `${monthRoman}. ${day}.`;
+      case "YM":
+        return `${year}. ${monthText}`;
 
     }
     return "UNKNOWN_FORMAT - " + d.toString();

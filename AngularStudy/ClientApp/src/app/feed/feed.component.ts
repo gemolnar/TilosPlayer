@@ -57,6 +57,11 @@ export class FeedComponent implements OnInit {
     }, error => console.error(error));
   }
 
+  getYearMonthPath(startTimeStamp: number) {
+    const d = new Date(startTimeStamp);
+    return `${d.getFullYear()}/${d.getMonth()+1}`;
+  }
+
   createQuery(y, m, d): string {
     // date: utolsó nap, ennél régebbi kell
     const date = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));

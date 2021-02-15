@@ -1,3 +1,5 @@
+/// <reference path="../../../node_modules/@types/chromecast-caf-sender/index.d.ts" />
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Episode } from '../Episode';
@@ -6,7 +8,6 @@ import { Episode } from '../Episode';
   providedIn: 'root'
 })
 export class LocalAudioPlayerService {
-
 
   private audioObj = new Audio();
   public episodeChange: BehaviorSubject<Episode>;
@@ -18,11 +19,28 @@ export class LocalAudioPlayerService {
     this.audioObj.addEventListener("timeupdate", this.onTimeUpdate.bind(this));
     this.audioObj.addEventListener("pause", this.onLocalPlayerPaused.bind(this));
     this.audioObj.addEventListener("play", this.onLocalPlayerPlaying.bind(this));
-
+    
 
     this.episodeChange = new BehaviorSubject<Episode>(null);
     this.progressChange = new BehaviorSubject<number>(0);
     this.isPlayingStatusChange = new BehaviorSubject<boolean>(false);
+  }
+
+  // Player UI calls this when it initialized the Cast framwork, passes in its context
+  initializeCast(castContext: cast.framework.CastContext) {
+    castContext.addEventListener(      
+      cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+      function (event) {
+        switch (event.sessionState) {
+          case cast.framework.SessionState.SESSION_STARTED:
+          case cast.framework.SessionState.SESSION_RESUMED:
+            console.log('Player: CastSession connected');
+            break;
+          case cast.framework.SessionState.SESSION_ENDED:
+            console.log('Player: CastSession disconnected');
+            break;
+        }
+      });
   }
 
   private onLocalPlayerPaused(e: Event) {
@@ -62,4 +80,7 @@ export class LocalAudioPlayerService {
     const currentTime = this.audioObj.duration * p;
     this.audioObj.currentTime = currentTime;
   }
+
+
+
 }

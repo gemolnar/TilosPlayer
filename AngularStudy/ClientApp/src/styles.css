@@ -19,6 +19,6 @@ code {
 
 .qqq img {
   /* Styles goes here */
-  width: 100%;
+  max-width: 100%;
 }
 

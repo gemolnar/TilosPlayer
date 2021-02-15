@@ -14,14 +14,10 @@ export class ShowsComponent {
 
   constructor(s: ShowProviderService) {
     s.p.then(p => this.shows = p);
-    
-    //console.log("masodik show");
-    //const getShow: Observable<Show[]> = http.get<Show[]>(baseUrl + 'api/v1/show');
-    //console.log("masodik show: observable megvan");
-    //const getShowPromise = getShow.toPromise();
-    //console.log("masodik show: topromise megvan");
-    //getShowPromise.then(s => console.log("masodik show: .then eloszor" + s.length));
-    //getShowPromise.then(s => console.log("masodik show: .then masodszor" + s.length));
-    //getShowPromise.then(s => console.log("masodik show: .then harmadszor" + s.length));
+  }
+
+  getYearMonthPath() {
+    const d = new Date();
+    return `${d.getFullYear()}/${d.getMonth() + 1}`;
   }
 }

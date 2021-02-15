@@ -4,9 +4,13 @@
   <meta charset="utf-8" />
   <title>AngularStudy</title>
   <base href="/" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <!-- ChromeCast sender API -->
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
   <!-- Begin: Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWZG6Z8GHG"></script>
@@ -18,7 +22,25 @@
   </script>
   <!-- End: Google Analytics (gtag.js) -->
 
+  <script>
+
+    window['__onGCastApiAvailable'] = function (isAvailable) {
+      if (isAvailable) {
+        var applicationId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
+        console.log("ChromeCast app id: " + applicationId);
+        cast.framework.CastContext.getInstance().setOptions({
+          receiverApplicationId: applicationId,
+          autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        });
+ 
+        console.log(castSession);
+
+      }
+    };
+  </script>
 </head>
+
+
   <body>
     <app-root>Loading...</app-root>
   </body>

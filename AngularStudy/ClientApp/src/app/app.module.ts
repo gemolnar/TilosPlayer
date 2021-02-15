@@ -34,9 +34,9 @@ import { EpisodeComponent } from './episode/episode.component';
       { path: '', component: ShowsComponent, pathMatch: 'full' },
       { path: 'musorok', component: ShowsComponent },
       { path: 'musorfolyam/:y/:m/:d', component: FeedComponent }, 
-      { path: 'show/:alias', component: ShowComponent },
+      { path: 'show/:alias/:y/:m', component: ShowComponent },
 
-    ])
+    ], { scrollPositionRestoration: "enabled" })
   ],
   providers: [ShowProviderService, DateFormatterService],
   bootstrap: [AppComponent]

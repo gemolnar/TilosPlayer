@@ -41,7 +41,7 @@
         <button type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
           <i class="bi bi-folder-symlink"></i> Adás
         </button>
-        <button routerLink="/show/{{episode.show.alias}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 0px">
+        <button routerLink="/show/{{episode.show.alias}}/{{getYearMonthPath(episode.plannedFrom)}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 0px">
           <i class="bi bi-folder-symlink"></i> Műsor
         </button>
       </p>

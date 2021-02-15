@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { logging } from 'protractor';
 import { Episode } from '../Episode';
 import { LocalAudioPlayerService } from '../services/local-audio-player.service';
+
+declare const cast: any; // <-- important bit. you are using google's code here
+
 
 @Component({
   selector: 'app-player',
@@ -20,6 +24,17 @@ export class PlayerComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+
+  ngAfterViewInit() {
+    // ChromeCast init
+    const castContainer = document.getElementById("google-cast-launcher-container");
+    const castLauncher = document.createElement("google-cast-launcher");
+    castContainer.appendChild(castLauncher);
+    // Init localPlayer with CC context
+    const castContext = cast.framework.CastContext.getInstance();// as cast.framework.CastContext;
+    this.localPlayer.initializeCast(castContext);
   }
 
 
