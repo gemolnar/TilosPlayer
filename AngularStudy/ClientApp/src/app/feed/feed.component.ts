@@ -15,7 +15,7 @@ import { ShowProviderService } from '../services/show-provider.service';
 export class FeedComponent implements OnInit {
 
   public episodes: Episode[];
-
+  public currentDate: string;
 
   constructor(
     private http: HttpClient,
@@ -32,12 +32,17 @@ export class FeedComponent implements OnInit {
       const y = params['y'];
       const m = params['m'];
       const d = params['d'];
+
+      const parsedDate = new Date(parseInt(y), parseInt(m) - 1, d);
+      const currentDateTimestamp = +parsedDate;
+      this.currentDate = this.dateFormater.fromTimestamp(currentDateTimestamp, 'D');
+
       const queryParam = this.createQuery(y, m, d);
       const apiUrl = `${this.baseUrl}api/v1/episode?${queryParam}`;
 
       this.http.get<Episode[]>(apiUrl).subscribe(result => {
         result.sort((a, b) => b.plannedFrom - a.plannedFrom);
-        this.episodes = result;
+        this.episodes = result.filter(e => e.m3uUrl != null);
         //this.episodes.sort((a, b) => a.plannedFrom - b.plannedFrom);
         console.log(result);
         this.showProviderService.p.then(shows => {
@@ -57,10 +62,23 @@ export class FeedComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  getYearMonthPath(startTimeStamp: number) {
-    const d = new Date(startTimeStamp);
-    return `${d.getFullYear()}/${d.getMonth()+1}`;
+
+
+  pagerButtonClicked(dir: number) {
+    //const originalStartDate = new Date(this.startTimestamp);
+    //const newDate = new Date(originalStartDate.setMonth(originalStartDate.getMonth() + dir * 3));
+    //this.startTimestamp = +newDate;
+    //this.refreshEpisodes();
+    //const url = this.router.createUrlTree(['../../', newDate.getFullYear(), newDate.getMonth() + 1], { relativeTo: this.route });
+    //this.episodes = null;
+    //this.router.navigateByUrl(url);
   }
+
+
+  //getYearMonthPath(startTimeStamp: number) {
+  //  const d = new Date(startTimeStamp);
+  //  return `${d.getFullYear()}/${d.getMonth()+1}`;
+  //}
 
   createQuery(y, m, d): string {
     // date: utolsó nap, ennél régebbi kell

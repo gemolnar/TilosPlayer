@@ -1,19 +1,34 @@
-<h1 class="display-4">Archívum</h1>
-<h1 id="tableLabel">3030. február 43.</h1>
 
-
+<div style="padding-bottom:100px"></div>
+<h1>Műsorfolyam</h1><!--class="display-4"-->
 <div *ngIf="!episodes" class="text-center">
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
 </div>
-
 <div *ngIf="episodes">
+  <h5>{{currentDate}}</h5>
+
+  <div class="btn-group" role="group">
+    <button type="button" (click)="pagerButtonClicked(-1)" class="btn btn-secondary btn-sm" style="margin-right: 5px">
+      <b class="bi bi-caret-left-fill"></b>
+      Régebbiek
+    </button>
+    <button type="button" (click)="pagerButtonClicked(1)" class="btn btn-secondary btn-sm">
+      Újabbak
+      <b class="bi bi-caret-right-fill"></b>
+    </button>
+  </div>
+  <div style="margin-bottom: 40px">
+  </div>
 
   <div *ngFor="let episode of episodes" class="card" style="margin-bottom: 40px">
-
     <div class="card-header">
-      <h5>{{ episode.text?.title != null ? episode.show?.name : "" }}</h5>
+      <h5>
+        {{
+ episode.text?.title != null ? episode.show?.name : ""
+        }}
+      </h5>
       <h3 class="card-title">{{ episode.text?.title != null ? episode.text?.title : episode.show?.name }}</h3>
       <p>
         <small>
@@ -34,20 +49,20 @@
 
 
     <div class="card-body">
-      <p>
-        <button (click)="onPlayButtonClicked(episode)" type="button" class="btn btn-outline-success btn-sm" style="margin-right: 15px">
-          <i class="bi bi-play"></i> Play
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
+      <p class="lead">{{ episode.show?.definition }}</p>
+      <p class="qqq" style="overflow: hidden;" innerHTML="{{ episode.text?.formatted }}"></p>
+      <div class="float-right">
+        <button routerLink="/adas/{{episode.id}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
           <i class="bi bi-folder-symlink"></i> Adás
         </button>
-        <button routerLink="/show/{{episode.show.alias}}/{{getYearMonthPath(episode.plannedFrom)}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 0px">
+        <button routerLink="/musorok/{{episode.show.alias}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 15px">
           <i class="bi bi-folder-symlink"></i> Műsor
         </button>
-      </p>
-      <p class="lead">{{ episode.show?.definition }}</p>
+        <button (click)="onPlayButtonClicked(episode)" type="button" class="btn btn-outline-success btn-sm" style="">
+          <i class="bi bi-play"></i> Play
+        </button>
+      </div>
 
-      <p class="qqq" style="overflow: hidden;" innerHTML="{{ episode.text?.formatted }}"></p>
     </div>
 
   </div>

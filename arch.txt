@@ -1,4 +1,12 @@
-﻿
+﻿// TODO
+ - /show/alias átnevezése /musor-ra
+ - /musorfolyam link
+ - play gombok pozicionálása
+ - /musorfolyam dátum kiírás
+ - adás oldal
+
+
+
 GuiController
 -------------
 Drives the GUI, handles GUI events.

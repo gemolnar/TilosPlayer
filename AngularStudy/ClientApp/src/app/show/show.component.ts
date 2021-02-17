@@ -114,7 +114,7 @@ export class ShowComponent implements OnInit {
   }
 
   public getYearAndMonthFormatted(): string {
-    return this.dateFormater.fromTimestamp(this.startTimestamp, 'YM');
+    return this.dateFormater.fromTimestamp(this.startTimestamp, 'YS');
   }
 
   public getIconClass(linkType: string) {

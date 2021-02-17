@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Episode } from '../Episode';
 import { AudioPlayerService } from '../services/audio-player.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AudioPlayerService } from '../services/audio-player.service';
   styleUrls: ['./episode.component.css']
 })
 export class EpisodeComponent implements OnInit {
+  episode: Episode;
 
   constructor(
     private http: HttpClient,
@@ -18,16 +20,17 @@ export class EpisodeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //https://tilos.hu/api/v1/episode/600e5e61b62e0d73f9ad6b68
 
     this.route.params.subscribe(params => {
-      //const alias = params['alias'];
+      const id = params['id'];
       //console.log("alias: " + alias);
 
-      //const showUrl = `${this.baseUrl}api/v1/show/${alias}`;
-      //this.http.get<ShowDetail>(showUrl).subscribe(result => {
-      //  this.show = result;
-      //  //console.log(result);
-      //}, error => console.error(error));
+      const episodeUrl = `${this.baseUrl}api/v1/episode/${id}`;
+      this.http.get<Episode>(episodeUrl).subscribe(result => {
+        this.episode = result;
+        //console.log(result);
+      }, error => console.error(error));
 
       //const end = +new Date();
       //const d = 60 * 24 * 60 * 60 * 1000;

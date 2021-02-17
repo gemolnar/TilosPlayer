@@ -14,6 +14,7 @@ import { FeedComponent } from './feed/feed.component';
 import { ShowProviderService } from './services/show-provider.service';
 import { DateFormatterService } from './services/date-formatter.service';
 import { EpisodeComponent } from './episode/episode.component';
+import { RootPageComponent } from './root-page/root-page.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { EpisodeComponent } from './episode/episode.component';
     PlayerComponent,
     FeedComponent,
     EpisodeComponent,
+    RootPageComponent,
   ],
   imports: [
 
@@ -32,10 +34,11 @@ import { EpisodeComponent } from './episode/episode.component';
     FormsModule,
 
     RouterModule.forRoot([
-      { path: '', component: ShowsComponent, pathMatch: 'full' },
-      { path: 'musorok', component: ShowsComponent },
+      { path: '', component: RootPageComponent, pathMatch: 'full' },
       { path: 'musorfolyam/:y/:m/:d', component: FeedComponent }, 
-      { path: 'show/:alias', component: ShowComponent },
+      { path: 'musorok', component: ShowsComponent },
+      { path: 'musorok/:alias', component: ShowComponent },
+      { path: 'adas/:id', component: EpisodeComponent },
 
     ], { scrollPositionRestoration: "enabled" })
   ],

@@ -16,5 +16,7 @@ export class ShowsComponent {
     s.p.then(p => this.shows = p);
   }
 
-
+  public filterShowsByType(type: 'MUSIC' | 'SPEECH') {
+    return this.shows.filter(s => s.type === type);
+  }
 }

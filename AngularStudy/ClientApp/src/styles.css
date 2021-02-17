@@ -22,3 +22,6 @@ code {
   max-width: 100%;
 }
 
+body {
+  overflow-y: scroll; /* Show vertical scrollbar */
+}
