@@ -60,10 +60,10 @@ export class PlayerComponent implements OnInit {
     });
   }
 
-  getPlayerTitle(): string {
+  getPlayerTitle1(): string {
 
     if (!this.currentEpisode) {
-      return "nincs lejátszott adás";
+      return "lejátszott adás";
     }
 
     let firstPart: string;
@@ -78,6 +78,14 @@ export class PlayerComponent implements OnInit {
     else {
       firstPart = "ISMERETLEN MŰSOR";
     }
+    return firstPart;
+  }
+
+  getPlayerTitle2(): string {
+
+    if (!this.currentEpisode) {
+      return "jelenleg nincs";
+    }
 
     let secondPart: string;
     if (this.currentEpisode.text && this.currentEpisode.text.title) {
@@ -87,8 +95,10 @@ export class PlayerComponent implements OnInit {
       secondPart = this.dateFormater.fromTimestamp(this.currentEpisode.plannedFrom, "MD");
     }
 
-    return `${firstPart} - ${secondPart}`;
+    return secondPart;
   }
+
+
 
   onProgressBarClicked(e: MouseEvent) {
     const p = e.offsetX / ((e.target as HTMLElement).clientWidth);

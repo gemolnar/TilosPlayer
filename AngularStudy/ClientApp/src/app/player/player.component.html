@@ -8,25 +8,49 @@
     margin-bottom: 6px;
     opacity: 0.96;">
 
-    <div class="row">
+    <!--<div class="row">
       <div class="col">
-        
-        <h5>{{ getPlayerTitle() }} </h5>
+        <p class="h4"><b>{{ getPlayerTitle1() }}:</b> {{ getPlayerTitle2() }}</p>
       </div>
     </div>
+
+    <div class="row" style="margin-bottom: 10px;margin-top:-5px">
+      <div class="col">
+        <small>
+          <b>{{ originallyAired }}</b>
+        </small>
+      </div>
+    </div>-->
+
+
+    <div class="row">
+      <div class="col">
+        <div class="float-left">
+          <p class="h4"><b>{{ getPlayerTitle1() }}:</b> {{ getPlayerTitle2() }}</p>
+        </div>
+        <div class="float-right">
+          <small>
+            adásidő: <b>{{ originallyAired }}</b>
+          </small>
+        </div>
+
+      </div>
+    </div>
+
+
 
     <div class="row">
 
       <!--
-        A PROGRESS BAR SÁVJÁBAN VAN A GOMB
-        <div class="col" style="margin-bottom:5px;">
-        <div (click)="onProgressBarClicked($event)" style="background-color:lightgray">
-          <button *ngIf="!isPlaying" (click)="onPlayClicked()" type="button" class="btn btn-success btn-sm" style="margin-right: 10px; width:70px;">
-            <i class="bi bi-play-fill"></i>Play
-          </button>
-        </div>
+      A PROGRESS BAR SÁVJÁBAN VAN A GOMB
+      <div class="col" style="margin-bottom:5px;">
+      <div (click)="onProgressBarClicked($event)" style="background-color:lightgray">
+        <button *ngIf="!isPlaying" (click)="onPlayClicked()" type="button" class="btn btn-success btn-sm" style="margin-right: 10px; width:70px;">
+          <i class="bi bi-play-fill"></i>Play
+        </button>
       </div>
-        -->
+    </div>
+      -->
 
 
       <div class="col" style="margin-bottom:5px;">
@@ -40,26 +64,29 @@
 
     <div class="row">
       <div class="col" style="margin-bottom: 3px">
-        <button *ngIf="!isPlaying" (click)="onPlayClicked()" type="button" class="btn btn-success btn-sm" style="margin-right: 10px; width:70px;">
-          <i class="bi bi-play-fill"></i>Play
-        </button>
-        <button *ngIf="isPlaying" (click)="onPauseClicked()" type="button" class="btn btn-secondary btn-sm" style="margin-right: 10px; width: 70px;">
-          <i class="bi bi-pause-fill"></i>Pause
-        </button>
-        <!-- Google Cast launcher div -->
-        <div hidden id="google-cast-launcher-container" class="btn btn-sm btn-outline btn-warning" style="width: 50px; height: 30px" ></div>
+        <div class="float-left">
+
+          <!-- Google Cast launcher div -->
+          <div hidden id="google-cast-launcher-container" class="btn btn-sm btn-outline btn-warning" style="width: 50px; height: 30px"></div>
+        </div>
+        <div class="float-right">
+          <div *ngIf="currentEpisode">
+            <button routerLink="/adas/{{currentEpisode.id}}" type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
+              <i class="bi bi-folder-symlink"></i> Adás
+            </button>          <button *ngIf="!isPlaying" (click)="onPlayClicked()" type="button" class="btn btn-success btn-sm" style="margin-right: 10px; width:80px;">
+              <i class="bi bi-play-fill"></i>Play
+            </button>
+            <button *ngIf="isPlaying" (click)="onPauseClicked()" type="button" class="btn btn-secondary btn-sm" style="margin-right: 10px; width: 80px;">
+              <i class="bi bi-pause-fill"></i>Pause
+            </button>
+          </div>
+        </div>
+
       </div>
 
     </div>
-    
 
-    <div class="row">
-      <div class="col">
-        <small>
-          <b>adásban volt</b>: {{ originallyAired }}
-        </small>
-      </div>
-    </div>
+
   </div>
 </nav>
 
