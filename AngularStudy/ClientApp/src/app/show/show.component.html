@@ -1,35 +1,101 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+      <div *ngIf="episodes" style="padding-top: 96px; padding-bottom: 130px">
+        <h1>{{ getYearAndMonthFormatted() }}i adások</h1>
+        <!-- montly show list pager buttons -->
+        <div style="margin-bottom: 40px">
+          <button type="button" (click)="pagerButtonClicked(-1)" class="btn btn-secondary btn-sm" style="margin-right: 5px">
+            <b class="bi bi-caret-left-fill"></b>
+            Régebbiek
+          </button>
+          <button type="button" (click)="pagerButtonClicked(1)" class="btn btn-secondary btn-sm">
+            Újabbak
+            <b class="bi bi-caret-right-fill"></b>
+          </button>
+        </div>
+
+        <!-- montly show list cards -->
+        <div *ngFor="let episode of episodes" class="card" style="  margin-bottom: 50px;">
+          <div class="card-header">
+            <h6>
+              <b>{{ dateFormater.fromTimestamp(episode.realFrom, 'MD') }}</b>
+              {{ dateFormater.fromTimestamp(episode.realFrom, 'T') }} - {{ dateFormater.fromTimestamp(episode.realTo, 'T') }}
+            </h6>
+          </div>
+
+
+          <div class="card-body">
+            <div style="max-height: 800px; overflow: hidden; mask-image: linear-gradient(to bottom, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);">
+              <p class="lead">{{ episode?.text?.title }}</p>
+              <p *ngIf="episode.text?.formatted!= null" class="qqq" style="overflow: hidden;" innerHTML="{{ episode.text?.formatted }}"></p>
+            </div>
+            <div>
+              <p>
+                <button (click)="onPlayButtonClicked(episode)" type="button" class="btn btn-outline-success btn-sm" style="margin-right: 15px">
+                  <i class="bi bi-play"></i> Play
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
+                  <i class="bi bi-folder-symlink"></i> Adás
+                </button>
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </div>
+    <div class="col-sm-5">
+
+      <div *ngIf="show" style="padding-top: 96px; padding-bottom: 20px; overflow:hidden">
+        <!--műsor név-->
+        <h1 id="tableLabel">{{ show.name }}</h1>
+        <div>
+          <p class="lead">{{ show.definition }}</p>
+        </div>
+
+        <!--műsorkészítők-->
+        <div *ngIf="show?.contributors != null && show.contributors.length > 0">
+          <span *ngFor="let contributor of show.contributors" style="white-space:nowrap; margin-right: 15px"><img src="{{contributor.author?.avatar}}" class="rounded" height="10" style="margin-right:3px" /><small>{{contributor.nick}}</small></span>
+        </div>
+
+        <!-- LINKEK -->
+        <div *ngIf="show?.urls != null && show.urls.length > 0" style="padding-bottom: 30px">
+          <span *ngFor="let url of show.urls" style="white-space: nowrap; margin-right: 15px"><small><a class="{{ getIconClass(url.type) }}" href="{{ url.address }}" target="_blank">{{ url.label }}</a></small></span>
+        </div>
+
+        <!--Műsor ismertető-->
+        <div *ngIf="show?.description">
+          <div style="overflow:hidden" class="qqq">
+            <p innerHTML="{{ show.description }}"></p>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <!--<div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>-->
+</div>
 
 <p *ngIf="!show"><em>Loading...</em></p>
 
 
-<div *ngIf="show" style="padding-top: 96px; padding-bottom: 20px; overflow:hidden">
-  <!--műsor név-->
-  <h1 id="tableLabel">{{ show.name }}</h1>
-  <div>
-    <p class="lead">{{ show.definition }}</p>
-  </div>
 
-  <!--műsorkészítők-->
-  <div *ngIf="show?.contributors != null && show.contributors.length > 0">
-    <span *ngFor="let contributor of show.contributors" style="white-space:nowrap; margin-right: 15px"><img src="{{contributor.author?.avatar}}" class="rounded" height="10" style="margin-right:3px" /><small>{{contributor.nick}}</small></span>
-  </div>
-
-  <!-- LINKEK -->
-  <div *ngIf="show?.urls != null && show.urls.length > 0" style="padding-bottom: 30px">
-    <span *ngFor="let url of show.urls" style="white-space: nowrap; margin-right: 15px"><small><a class="{{ getIconClass(url.type) }}" href="{{ url.address }}" target="_blank">{{ url.label }}</a></small></span>
-  </div>
-
-  <!--Műsor ismertető-->
-  <div *ngIf="show?.description">
-    <div style="overflow:hidden" class="qqq">
-      <p innerHTML="{{ show.description }}"></p>
-    </div>
-  </div>
-
-
-
-
-</div>
 
 
 <div style="height: 160px" *ngIf="!episodes">
@@ -48,51 +114,6 @@
 </div>
 
 
-<div *ngIf="episodes" style="padding-bottom: 130px">
-  <h1>{{ getYearAndMonthFormatted() }}i adások</h1>
-  <!-- montly show list pager buttons -->
-  <div style="margin-bottom: 40px">
-    <button type="button" (click)="pagerButtonClicked(-1)" class="btn btn-secondary btn-sm" style="margin-right: 5px">
-      <b class="bi bi-caret-left-fill"></b>
-      Régebbiek
-    </button>
-    <button type="button" (click)="pagerButtonClicked(1)" class="btn btn-secondary btn-sm">
-      Újabbak
-      <b class="bi bi-caret-right-fill"></b>
-    </button>
-  </div>
 
-  <!-- montly show list cards -->
-  <div *ngFor="let episode of episodes" class="card" style="  margin-bottom: 50px;">
-    <div class="card-header">
-      <h6>
-        <b>{{ dateFormater.fromTimestamp(episode.realFrom, 'MD') }}</b>
-        {{ dateFormater.fromTimestamp(episode.realFrom, 'T') }} - {{ dateFormater.fromTimestamp(episode.realTo, 'T') }}
-      </h6>
-    </div>
-
-
-    <div class="card-body" >
-      <div style="max-height: 750px; overflow: hidden; mask-image: linear-gradient(to bottom, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);">
-        <p class="lead">{{ episode?.text?.title }}</p>
-        <p *ngIf="episode.text?.formatted!= null" class="qqq" style="overflow: hidden;" innerHTML="{{ episode.text?.formatted }}"></p>
-      </div>
-      <div>
-        <p>
-          <button (click)="onPlayButtonClicked(episode)" type="button" class="btn btn-outline-success btn-sm" style="margin-right: 15px">
-            <i class="bi bi-play"></i> Play
-          </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" style="margin-right: 5px">
-            <i class="bi bi-folder-symlink"></i> Adás
-          </button>
-        </p>
-      </div>
-    </div>
-
-  </div>
-
-
-
-</div>
 
 

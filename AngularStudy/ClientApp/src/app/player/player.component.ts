@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnInit } from '@angular/core';
+import { log } from 'console';
 import { logging } from 'protractor';
 import { Episode } from '../Episode';
-import { LocalAudioPlayerService } from '../services/local-audio-player.service';
-
-declare const cast: any; // <-- important bit. you are using google's code here
+import { AudioPlayerService } from '../services/audio-player.service';
 
 
 @Component({
@@ -17,40 +16,47 @@ export class PlayerComponent implements OnInit {
   public progressPercent: number;
   public isPlaying = false;
 
-  constructor(private localPlayer: LocalAudioPlayerService) {
-    localPlayer.episodeChange.subscribe(e => this.currentEpisode = e);
-    localPlayer.progressChange.subscribe(p => this.progressPercent = p);
-    localPlayer.isPlayingStatusChange.subscribe(ip => this.isPlaying = ip);
+  constructor(private audioPlayer: AudioPlayerService, private appRef: ApplicationRef) {
+    console.log("PlayerComponent ctor", appRef);
+    audioPlayer.episodeChange.subscribe(e => this.currentEpisode = e);
+    audioPlayer.progressChange.subscribe(p => this.onAudioPlayerProgressChanged(p)); 
+    audioPlayer.isPlayingStatusChange.subscribe(ip => this.isPlaying = ip);
   }
 
   ngOnInit() {
   }
 
 
+  onAudioPlayerProgressChanged(p: number) {
+    this.progressPercent = p;
+    this.appRef.tick();
+    //console.log("ProgressPercent updated", p, this.currentEpisode);
+  }
+
   ngAfterViewInit() {
-    // ChromeCast init
     const castContainer = document.getElementById("google-cast-launcher-container");
-    const castLauncher = document.createElement("google-cast-launcher");
-    castContainer.appendChild(castLauncher);
-    // Init localPlayer with CC context
-    const castContext = cast.framework.CastContext.getInstance();// as cast.framework.CastContext;
-    this.localPlayer.initializeCast(castContext);
+    castContainer.addEventListener("castinitialized", () => {
+      castContainer.hidden = false;
+      const castLauncher = document.createElement("google-cast-launcher");
+      castContainer.appendChild(castLauncher);
+      this.audioPlayer.initializeCast();
+    });
   }
 
 
   onProgressBarClicked(e: MouseEvent) {
     const p = e.offsetX / ((e.target as HTMLElement).clientWidth);
-    this.localPlayer.seekTo(p);
+    this.audioPlayer.seekTo(p);
   }
 
 
   onPauseClicked() {
     //this.isPlaying = false;
-    this.localPlayer.pause();
+    this.audioPlayer.pause();
   }
 
   onPlayClicked() {
     //this.isPlaying = true;
-    this.localPlayer.play();
+    this.audioPlayer.play();
   }
 }

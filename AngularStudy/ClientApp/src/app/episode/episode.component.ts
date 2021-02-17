@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LocalAudioPlayerService } from '../services/local-audio-player.service';
+import { AudioPlayerService } from '../services/audio-player.service';
 
 @Component({
   selector: 'app-episode',
@@ -15,7 +15,6 @@ export class EpisodeComponent implements OnInit {
     private route: ActivatedRoute,
 
     @Inject('BASE_URL') private baseUrl: string,
-    private localAudioPlayerService: LocalAudioPlayerService,
   ) { }
 
   ngOnInit() {

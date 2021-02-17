@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, ActivatedRoute, ParamMap } from '@angular/router';
@@ -34,7 +35,7 @@ import { EpisodeComponent } from './episode/episode.component';
       { path: '', component: ShowsComponent, pathMatch: 'full' },
       { path: 'musorok', component: ShowsComponent },
       { path: 'musorfolyam/:y/:m/:d', component: FeedComponent }, 
-      { path: 'show/:alias/:y/:m', component: ShowComponent },
+      { path: 'show/:alias', component: ShowComponent },
 
     ], { scrollPositionRestoration: "enabled" })
   ],

@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Episode } from '../Episode';
 import { DateFormatterService } from '../services/date-formatter.service';
-import { LocalAudioPlayerService } from '../services/local-audio-player.service';
+import { AudioPlayerService } from '../services/audio-player.service';
 import { ShowProviderService } from '../services/show-provider.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class FeedComponent implements OnInit {
     @Inject('BASE_URL') private baseUrl: string,
     private showProviderService: ShowProviderService,
     private dateFormater: DateFormatterService,
-    private localAudioPlayerService: LocalAudioPlayerService,
+    private audioPlayerService: AudioPlayerService,
   ) { }
 
   ngOnInit() {
@@ -72,6 +72,6 @@ export class FeedComponent implements OnInit {
   }
 
   public onPlayButtonClicked(episode: Episode) {
-    this.localAudioPlayerService.startPlaybackEpisode(episode);
+    this.audioPlayerService.startPlaybackEpisode(episode);
   }
 }

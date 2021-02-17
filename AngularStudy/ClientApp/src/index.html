@@ -9,7 +9,43 @@
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
   <!-- ChromeCast sender API -->
+  <script>
+    window['__onGCastApiAvailable'] = function (isAvailable) {
+      
+      
+
+      //console.log("CastAPI: Init function called.", isAvailable);
+      if (isAvailable) {
+        const castButtonContainer = document.getElementById("google-cast-launcher-container");
+        const applicationId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
+        if (castButtonContainer) {
+          var castContextOptions = {
+            receiverApplicationId: applicationId,
+            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+          };
+          console.log("CastAPI: CastButtonContainer found. Setting up CastContext.", castContextOptions);
+          cast.framework.CastContext.getInstance().setOptions(castContextOptions);
+
+          console.log("CastAPI: Firing event on castButtonContainer.");
+          var castInitEvent = new CustomEvent("castinitialized");
+          castButtonContainer.dispatchEvent(castInitEvent);
+        }
+        else {
+          console.error("CastAPI: Cast is available, but castButtonContainer cannot be found.");
+        }
+
+        
+        
+      }
+      else {
+        console.warn("CastAPI: Cast is not available.", isAvailable);
+      }
+
+    };
+    console.log("CastAPI: Init function registered.");
+  </script>
   <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 
   <!-- Begin: Google Analytics (gtag.js) -->
@@ -22,22 +58,6 @@
   </script>
   <!-- End: Google Analytics (gtag.js) -->
 
-  <script>
-
-    window['__onGCastApiAvailable'] = function (isAvailable) {
-      if (isAvailable) {
-        var applicationId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
-        console.log("ChromeCast app id: " + applicationId);
-        cast.framework.CastContext.getInstance().setOptions({
-          receiverApplicationId: applicationId,
-          autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-        });
- 
-        console.log(castSession);
-
-      }
-    };
-  </script>
 </head>
 
 

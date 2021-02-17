@@ -16,8 +16,5 @@ export class ShowsComponent {
     s.p.then(p => this.shows = p);
   }
 
-  getYearMonthPath() {
-    const d = new Date();
-    return `${d.getFullYear()}/${d.getMonth() + 1}`;
-  }
+
 }

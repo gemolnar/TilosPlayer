@@ -35,7 +35,6 @@
         </div>
       </div>
 
-
     </div>
 
     <div class="row">
@@ -43,12 +42,12 @@
         <button *ngIf="!isPlaying" (click)="onPlayClicked()" type="button" class="btn btn-success btn-sm" style="margin-right: 10px; width:70px;">
           <i class="bi bi-play-fill"></i>Play
         </button>
-        <button *ngIf="isPlaying" (click)="onPauseClicked()" type="button" class="btn btn-secondary btn-sm" style="">
+        <button *ngIf="isPlaying" (click)="onPauseClicked()" type="button" class="btn btn-secondary btn-sm" style="margin-right: 10px; width: 70px;">
           <i class="bi bi-pause-fill"></i>Pause
         </button>
-        <div class="btn btn-sm btn-outline btn-warning" style="width: 50px; height: 30px" id="google-cast-launcher-container"></div>
+        <!-- Google Cast launcher div -->
+        <div hidden id="google-cast-launcher-container" class="btn btn-sm btn-outline btn-warning" style="width: 50px; height: 30px" ></div>
       </div>
-      <!--<google-cast-launcher></google-cast-launcher>-->
 
     </div>
     
