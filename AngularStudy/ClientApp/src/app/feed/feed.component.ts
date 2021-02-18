@@ -5,6 +5,7 @@ import { Episode } from '../Episode';
 import { DateFormatterService } from '../services/date-formatter.service';
 import { AudioPlayerService } from '../services/audio-player.service';
 import { ShowProviderService } from '../services/show-provider.service';
+import { NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-feed',
@@ -17,6 +18,9 @@ export class FeedComponent implements OnInit {
   public episodes: Episode[];
   public currentDate: string;
 
+  public datePickerModel: NgbDateStruct;
+  date: { year: number; month: number };
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -24,7 +28,15 @@ export class FeedComponent implements OnInit {
     private showProviderService: ShowProviderService,
     private dateFormater: DateFormatterService,
     private audioPlayerService: AudioPlayerService,
+    private router: Router
   ) { }
+
+  onNavigate(e: NgbDate) {
+    //console.log("NAVIGATE", e.);
+    const url = this.router.createUrlTree(['../../../', e.year, e.month, e.day], { relativeTo: this.route });
+    this.episodes = null;
+    this.router.navigateByUrl(url);
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -32,6 +44,10 @@ export class FeedComponent implements OnInit {
       const y = params['y'];
       const m = params['m'];
       const d = params['d'];
+
+      
+      //this.datePickerModel = this.calendar.getToday(); 
+      this.datePickerModel = { year: parseInt(y), month: parseInt(m), day: parseInt(d) };
 
       const parsedDate = new Date(parseInt(y), parseInt(m) - 1, d);
       const currentDateTimestamp = +parsedDate;
@@ -42,7 +58,7 @@ export class FeedComponent implements OnInit {
 
       this.http.get<Episode[]>(apiUrl).subscribe(result => {
         result.sort((a, b) => b.plannedFrom - a.plannedFrom);
-        this.episodes = result.filter(e => e.m3uUrl != null);
+        this.episodes = result.filter(e => e.m3uUrl !== null);
         //this.episodes.sort((a, b) => a.plannedFrom - b.plannedFrom);
         console.log(result);
         this.showProviderService.p.then(shows => {

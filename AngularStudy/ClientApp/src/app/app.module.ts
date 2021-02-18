@@ -15,6 +15,7 @@ import { ShowProviderService } from './services/show-provider.service';
 import { DateFormatterService } from './services/date-formatter.service';
 import { EpisodeComponent } from './episode/episode.component';
 import { RootPageComponent } from './root-page/root-page.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { RootPageComponent } from './root-page/root-page.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-
+    NgbModule,
     RouterModule.forRoot([
       { path: '', component: RootPageComponent, pathMatch: 'full' },
       { path: 'musorfolyam/:y/:m/:d', component: FeedComponent }, 
@@ -42,6 +43,8 @@ import { RootPageComponent } from './root-page/root-page.component';
 
     ], { scrollPositionRestoration: "enabled" })
   ],
+  //  providers: [{provide: LOCALE_ID, useValue: 'en-US' }]
+
   providers: [ShowProviderService, DateFormatterService],
   bootstrap: [AppComponent]
 })

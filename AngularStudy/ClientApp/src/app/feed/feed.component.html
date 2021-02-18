@@ -1,33 +1,48 @@
 
+
 <div style="padding-bottom:100px"></div>
-<h1>Műsorfolyam</h1><!--class="display-4"-->
+
 <div *ngIf="!episodes" class="text-center">
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
 </div>
-<div *ngIf="episodes">
-  <h5>{{currentDate}}</h5>
 
-  <div class="btn-group" role="group">
-    <button type="button" (click)="pagerButtonClicked(-1)" class="btn btn-secondary btn-sm" style="margin-right: 5px">
-      <b class="bi bi-caret-left-fill"></b>
-      Régebbiek
-    </button>
-    <button type="button" (click)="pagerButtonClicked(1)" class="btn btn-secondary btn-sm">
-      Újabbak
-      <b class="bi bi-caret-right-fill"></b>
-    </button>
+
+<div class="row">
+  <div class="col">
+    <h1>Műsorfolyam</h1><!--class="display-4"-->
   </div>
+  <div class="col">
+    <div class="float-right">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <input readonly style="width:160px" class="form-control form-control-lg" placeholder="yyyy-mm-dd"
+                   name="dp" [(ngModel)]="datePickerModel" (dateSelect)="onNavigate($event)" ngbDatepicker #d="ngbDatepicker"  />
+            <div class="input-group-append">
+              <button class="btn btn-lg btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                <i class="bi bi-calendar-event"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="episodes">
+
   <div style="margin-bottom: 40px">
   </div>
 
   <div *ngFor="let episode of episodes" class="card" style="margin-bottom: 40px">
     <div class="card-header">
       <h5>
-        {{
- episode.text?.title != null ? episode.show?.name : ""
-        }}
+        {{ episode.text?.title != null ? episode.show?.name : "" }}
       </h5>
       <h3 class="card-title">{{ episode.text?.title != null ? episode.text?.title : episode.show?.name }}</h3>
       <p>
